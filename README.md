@@ -42,6 +42,23 @@ REDIS_PASSWORD=9EqjB12O8IMLJntu32YbBOYcW9tYZ38o // yeah, you can steal the passw
 CACHE_TTL=172800
 ```
 
+## ⚠️ Security Notice
+
+For development purposes, Redis credentials are exposed in this repository. In a production environment:
+
+1. Never commit sensitive credentials
+2. Use environment variables
+3. Keep .env file private
+4. Use a secure Redis instance
+
+### Development Credentials (DO NOT USE IN PRODUCTION)
+
+```env
+REDIS_HOST=redis-17923.c341.af-south-1-1.ec2.redns.redis-cloud.com
+REDIS_PORT=17923
+REDIS_PASSWORD=9EqjB12O8IMLJntu32YbBOYcW9tYZ38o
+```
+
 4. Run the development server:
 
 ```bash
