@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 606802968668.dkr.ecr.eu-central-1.amazonaws.com
+      #- aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+      #- echo Pulling the base image from ECR Public...
+      #- docker pull public.ecr.aws/j0o3w3t9/villagesquare-base-images:node-20-alpine
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t villagesquare-server-v2 .
+      #- docker build --platform linux/arm64 -t villagesquare-server-v2 .
+      - docker tag villagesquare-server-v2:latest 606802968668.dkr.ecr.eu-central-1.amazonaws.com/villagesquare-server-v2:latest
+  post_build:
+    commands:
+      - echo Pushing the Docker image to Amazon ECR...
+      - docker push 606802968668.dkr.ecr.eu-central-1.amazonaws.com/villagesquare-server-v2:latest
+      - echo Image pushed successfully to Amazon ECR
+artifacts:
+  files:
+    - 'Dockerrun.aws.json'
